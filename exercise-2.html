@@ -42,18 +42,18 @@
 class TodoList extends React.Component {
   render(){
     const todoItems = tasks.map((task) => {
-      return <ToDoItem taskName={task.taskName}/>
+      return <TodoItem taskName={task.taskName}/>
     })
     return (<div>
       <p>TODO List</p>
       <ul>
-        <TodoItem />
+        {todoItems}
       </ul>
    </div>);
   }
 }
 ReactDOM.render(
-  (<CityList/>),
+  (<TodoList/>),
   root);
     </script>
   </body>
