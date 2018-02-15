@@ -33,7 +33,28 @@
     const tasks = [{taskName: 'Walk Dog', finished: true}, {taskName: 'Buy Bread', finished: false}];
 
     // TYPE ANSWER HERE
+  class TodoItem extends React.Component {
+  render(){
+    return (<li>{this.props.taskName}</li>);
+  }
+}
 
+class TodoList extends React.Component {
+  render(){
+    const todoItems = tasks.map((task) => {
+      return <ToDoItem taskName={task.taskName}/>
+    })
+    return (<div>
+      <p>TODO List</p>
+      <ul>
+        <TodoItem />
+      </ul>
+   </div>);
+  }
+}
+ReactDOM.render(
+  (<CityList/>),
+  root);
     </script>
   </body>
 </html>
