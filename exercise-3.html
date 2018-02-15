@@ -32,7 +32,35 @@
     const root = document.getElementById('root');
 
     // TYPE ANSWER HERE
+  class TodoItem extends React.Component {
+  render(){
+    return (<li>{this.props.taskName}</li>);
+  }
+}
 
+class TodoList extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = { tasks: [{taskName: 'Walk Dog', finished: true}, {taskName: 'Buy Bread', finished: false}] };
+    setTimeout(() => {
+      this.setState({tasks: [{taskName: 'Walk Dog', finished: true}, {taskName: 'Buy Bread', finished: false}, {taskName: 'Plan dinner', finished: false}]})
+    }, 2000);
+  }
+  render(){
+    const todoItems = this.state.tasks.map((task) => {
+      return <TodoItem taskName={task.taskName}/>
+    })
+    return (<div>
+      <p>TODO List</p>
+      <ul>
+        {todoItems}
+      </ul>
+   </div>);
+  }
+}
+ReactDOM.render(
+  (<TodoList/>),
+  root);
     </script>
   </body>
 </html>
