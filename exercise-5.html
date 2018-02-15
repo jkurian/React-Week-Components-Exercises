@@ -37,7 +37,92 @@
 
     const root = document.getElementById('root');
 
+    var rando = (function(){
+      var letters = 'abcdefghijklmnopqrstuvwxyz';
+      var alphabet = `0123456789${letters}${letters.toUpperCase()}`;
+
+      var randomNum = (function random(){
+      var output = '';
+        for (var i = 0; i < 6; i += 1) {
+          output += alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+        return output;
+      })();
+      return randomNum;
+    });
+
     // TYPE ANSWER HERE
+    class NewToDoForm extends React.Component {
+      render(){
+        const onSubmit = (evt) => {
+        evt.preventDefault();
+        const taskName = evt.target.elements.taskName.value;
+        const task = {taskName: taskName, finished: false, key: rando()}
+        this.props.addTodoItem(task);
+        evt.target.elements.taskName.value = '';
+      };
+      return (<div>
+       <p>Enter a new task!</p>
+        <form onSubmit={onSubmit}>
+          <input type='text' name='taskName'/>
+          <button type='submit'>Add Task</button>
+        </form>
+      </div>);
+  }
+}
+
+
+    class TodoItem extends React.Component {
+  render(){
+    const onClick = (evt) => {
+        evt.preventDefault();
+        this.props.deleteTask(this.props.id);
+      };
+    return (<li id={this.props.id}>
+      {this.props.taskName}
+      <button onClick={onClick}>
+          Delete
+      </button>
+      </li>);
+  }
+}
+
+class TodoList extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = { tasks: [{taskName: 'Walk Dog', finished: true, key: rando()}, {taskName: 'Buy Bread', finished: false, key:rando()}] };
+    this.addTodoItem = this.addTodoItem.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+  }
+  addTodoItem(task) {
+    task.key = rando();
+    const oldTasks = this.state.tasks;
+    const newTasks = this.state.tasks.concat(task);
+
+    this.setState({tasks: newTasks});
+  }
+  deleteTask(id) {
+    const oldTasks = this.state.tasks;
+    let updatedTasks = oldTasks.filter(task => task.key !== id);        
+    this.setState({tasks: updatedTasks})
+  }
+  render(){
+    const todoItems = this.state.tasks.map((task) => {
+      return <TodoItem taskName={task.taskName} id={task.key} deleteTask={this.deleteTask}/>
+    })
+    return (<div>
+      <p>TODO List</p>
+      <ul>
+        {todoItems}
+      </ul>
+      <NewToDoForm addTodoItem={this.addTodoItem}/>
+   </div>);
+  }
+}
+ReactDOM.render(
+  ( <TodoList/>
+),
+  root);
 
     </script>
   </body>

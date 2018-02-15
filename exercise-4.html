@@ -57,7 +57,7 @@
         const onSubmit = (evt) => {
         evt.preventDefault();
         const taskName = evt.target.elements.taskName.value;
-        const task = {taskName: taskName, finished: false}
+        const task = {taskName: taskName, finished: false, key: rando()}
         this.props.addTodoItem(task);
         evt.target.elements.taskName.value = '';
       };
