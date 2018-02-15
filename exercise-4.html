@@ -38,7 +38,63 @@
     const root = document.getElementById('root');
 
     // TYPE ANSWER HERE
+    class NewToDoForm extends React.Component {
+      render(){
+        const onSubmit = (evt) => {
+          console.log(evt.target.elements)
+        evt.preventDefault();
+        const taskName = evt.target.elements.taskName.value;
+        const task = {taskName: taskName, finished: false}
+        this.props.addTodoItem(task);
+        evt.target.elements.taskName.value = '';
+      };
+      return (<div>
+       <p>Enter a new task!</p>
+        <form onSubmit={onSubmit}>
+          <input type='text' name='taskName'/>
+          <button type='submit'>Add Task</button>
+        </form>
+      </div>);
+  }
+}
 
+
+    class TodoItem extends React.Component {
+  render(){
+    return (<li>{this.props.taskName}</li>);
+  }
+}
+
+class TodoList extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = { tasks: [{taskName: 'Walk Dog', finished: true}, {taskName: 'Buy Bread', finished: false}] };
+    this.addTodoItem = this.addTodoItem.bind(this);
+  }
+  addTodoItem(task) {
+    const oldTasks = this.state.tasks;
+    const newTasks = this.state.tasks.concat(task);
+
+    this.setState({tasks: newTasks});
+  }
+  render(){
+
+    const todoItems = this.state.tasks.map((task) => {
+      return <TodoItem taskName={task.taskName}/>
+    })
+    return (<div>
+      <p>TODO List</p>
+      <ul>
+        {todoItems}
+      </ul>
+      <NewToDoForm addTodoItem={this.addTodoItem}/>
+   </div>);
+  }
+}
+ReactDOM.render(
+  ( <TodoList/>
+),
+  root);
     </script>
   </body>
 </html>
