@@ -33,28 +33,43 @@
     const tasks = [{taskName: 'Walk Dog', finished: true}, {taskName: 'Buy Bread', finished: false}];
 
     // TYPE ANSWER HERE
-  class TodoItem extends React.Component {
-  render(){
-    return (<li>{this.props.taskName}</li>);
-  }
-}
+ 
+    class TodoListItem extends React.Component {
+      render(){
+        if(this.props.finished) {
+         return (
+          <tr>
+            <td>{this.props.taskName}</td><td><input type='checkbox' defaultChecked/></td>
+          </tr>)
+        } else {
+          return (
+            <tr>
+              <td>{this.props.taskName}</td><td><input type='checkbox'/></td>
+            </tr>)
+          }
+        }
+      }
+      class TodoList extends React.Component {
+        render() {
+          const toDoListItems = tasks.map((task) => {
+            return <TodoListItem taskName={task.taskName} finished={task.finished} />
+          })
+          return (
+            <div>
+              <table>
+                <thead>
+                  <tr><td>Task</td><td>Done?</td></tr>
+                </thead>
+                <tbody>
+                  {toDoListItems}
+                </tbody>
+                </table>
+            </div>
+          )
+        }
+      }
 
-class TodoList extends React.Component {
-  render(){
-    const todoItems = tasks.map((task) => {
-      return <TodoItem taskName={task.taskName}/>
-    })
-    return (<div>
-      <p>TODO List</p>
-      <ul>
-        {todoItems}
-      </ul>
-   </div>);
-  }
-}
-ReactDOM.render(
-  (<TodoList/>),
-  root);
+      ReactDOM.render((<TodoList />), root)
     </script>
   </body>
 </html>
