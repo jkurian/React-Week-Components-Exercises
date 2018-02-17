@@ -79,12 +79,10 @@
     class AddTodoListItem extends React.Component {
       constructor(props){
         super(props);
-        console.log('addtodolistitem props=', props)
         this.state = {inputValue: '', addTodo: props.addTodoItem} //bind this!!
         this.changeValue = this.changeValue.bind(this);
       }
       changeValue(taskName) {
-        console.log(taskName);
         this.setState({inputValue: taskName})
       }
       render() {
