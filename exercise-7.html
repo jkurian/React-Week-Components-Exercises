@@ -58,26 +58,40 @@
     const root = document.getElementById('root');
 
     // TYPE ANSWER HERE
-    function AddTodoListItem(props) {
+    class AddTodoListItem extends React.Component {
+      constructor(props){
+        super(props);
+        this.state = {inputValue: ''}
+      }
+      changeValue(taskName) {
+        this.setState({inputValue: taskName})
+      }
+      render() {
         const onSubmit = (evt) => {
+          console.log('submitted');
           evt.preventDefault();
           const taskName = evt.target.elements.taskName;
-          props.addTodoItem(taskName.value);
+          this.props.addTodoItem(taskName.value);
           taskName.value = '';
+        }
+        const onChange = (evt) => {
+          console.log(evt.target.value)
+          this.changeValue(evt.target.value);
         }
         return (
           <form onSubmit={onSubmit}> 
-            <input type='text' name='taskName'/>
+            <input type='text' name='taskName' value={this.state.inputValue} onChange={onChange}/>
             <button type='submit'>Submit Task </button>
-          </form>
+            </form>
           )
-    }
-
-    function TodoListItem (props) {
-        if(props.finished) {
-         return (
-          <tr>
-            <td>{props.taskName}</td><td><input type='checkbox' defaultChecked/></td>
+        }
+      }
+        
+        function TodoListItem (props) {
+          if(props.finished) {
+            return (
+              <tr>
+                <td>{props.taskName}</td><td><input type='checkbox' defaultChecked/></td>
           </tr>)
         } else {
           return (
