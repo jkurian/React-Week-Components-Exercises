@@ -68,14 +68,12 @@
       }
       render() {
         const onSubmit = (evt) => {
-          console.log('submitted');
           evt.preventDefault();
           const taskName = evt.target.elements.taskName;
           this.props.addTodoItem(taskName.value);
           taskName.value = '';
         }
         const onChange = (evt) => {
-          console.log(evt.target.value)
           this.changeValue(evt.target.value);
         }
         return (
@@ -123,9 +121,10 @@
           this.setState({loading: true})
           getTasks()
           .then((oldTasks) => {
-            const newTask = {taskName: taskName, finished: false};
-            const newTasks = oldTasks.concat(newTask)
-            this.setState({tasks: newTasks, loading: false});
+            addTask(taskName).then((newTask) => {
+              const newTasks = oldTasks.concat(newTask)
+              this.setState({tasks: newTasks, loading: false});
+              })
           })
         }
         render() {
