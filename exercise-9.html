@@ -166,6 +166,7 @@
           .then((oldTasks) => {
             const newTask = {taskName: taskName, finished: false};
             const newTasks = oldTasks.concat(newTask)
+            console.log(newTasks);
             this.setState({tasks: newTasks, loading: false});
           })
         }
