@@ -19,7 +19,7 @@
           <tbody>
             <!-- Show while loading -->
             <tr>
-              <td colspan='2'>Loading Tasks...</td>
+              <td colSpan='2'>Loading Tasks...</td>
             </tr>
             <!-- Show Results -->
             <tr>
@@ -113,9 +113,10 @@
           this.setState({loading: true})
           getTasks()
           .then((oldTasks) => {
-            const newTask = {taskName: taskName, finished: false};
-            const newTasks = oldTasks.concat(newTask)
-            this.setState({tasks: newTasks, loading: false});
+            addTask(taskName).then((newTask) => {
+              const newTasks = oldTasks.concat(newTask)
+              this.setState({tasks: newTasks, loading: false});
+              })
           })
         }
         render() {
@@ -127,7 +128,7 @@
                     <tr><td>Task</td><td>Done?</td></tr>
                   </thead>
                   <tbody>
-                    <tr><td colspan='2'>Loading Tasks...</td></tr>
+                    <tr><td colSpan='2'>Loading Tasks...</td></tr>
                   </tbody>
                 </table>
               </div>

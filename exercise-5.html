@@ -116,7 +116,6 @@
             addTask(taskName).then((newTask) => {
             const newTasks = oldTasks.concat(newTask)
             this.setState({tasks: newTasks, loading: false});
-
             })
           })
         }
